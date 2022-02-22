@@ -7,16 +7,24 @@ import se350.Assignment1.exception.NullParameterException;
 
 public class TravelManager {
 
-   public static void main(String[] args) throws BadParameterException, NullParameterException {
+   public static void main(String[] args) throws Exception, NullParameterException {
 
 
-  FlightManager manager = new FlightManager();
-  manager.createFlight();
 
-  System.out.println(manager.flights);
-  System.out.println(manager.getFlightByNumber((manager.flights.get(0)).getFlightNumber()));
+  System.out.println(FlightManager.getInstance());
+  System.out.println(FlightManager.getInstance());
+  System.out.println(FlightManager.getInstance());
+  System.out.println(FlightManager.getInstance());
 
-  manager.getFlightByNumber("1000000000");
+  FlightManager manager = FlightManager.getInstance();
+
+  String firstFlight = manager.createFlight("Commercial");
+  System.out.println(manager.getInstance().getFlightByNumber(firstFlight)); //getElement is there for testing purposes only.
+
+  String secondFlight =manager.createFlight("Passenger");
+  System.out.println(manager.getInstance().getFlightByNumber(secondFlight)); //getElement is there for testing purposes only.
+
+  //manager.getFlightByNumber("1000000000"); // Shows that Exception is thrown on a bad flight number search
 
   }
 }

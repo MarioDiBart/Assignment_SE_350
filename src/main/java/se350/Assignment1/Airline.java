@@ -21,6 +21,8 @@ public class Airline {
     }
     this.airlineName = airlineName;
   }
+
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {

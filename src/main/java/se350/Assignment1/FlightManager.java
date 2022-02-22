@@ -3,21 +3,16 @@ package se350.Assignment1;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Date;
 import se350.Assignment1.exception.BadParameterException;
 import se350.Assignment1.exception.NullParameterException;
 
 public final class FlightManager {
 
   private static FlightManager ourInstance;
-  private FlightFactory factory;
   private Random rand = new Random();
-  private Airline airline = new Airline("Delta");
 
-  private Airport airport1 = new Airport("ORD");
-  private Airport airport2 = new Airport("MIA");
 
-  public List<Flight> flights = new ArrayList<Flight>() {
+  private List<Flight> flights = new ArrayList<Flight>() {
   };
 
   public static FlightManager getInstance() throws Exception {
@@ -27,14 +22,21 @@ public final class FlightManager {
     return ourInstance;
   }
 
-  FlightManager() throws BadParameterException {
+  private FlightManager() throws BadParameterException {
 
   }
 
-  public void createFlight() throws BadParameterException, NullParameterException {
-    flights.add(factory.createFlight("Commercial", airline, airport1, airport2,
-        String.valueOf(rand.nextInt(10000)), java.time.LocalDateTime.now()));
-
+  public String createFlight(String type) throws BadParameterException, NullParameterException {
+    String flightID = String.valueOf(rand.nextInt(10000));
+    if (type == "Commercial") {
+      flights.add(FlightFactory.createFlight("Commercial", AirlineFactory.getAirline("Delta"), AirportFactory.getAirport("ORD"), AirportFactory.getAirport("MIA"),
+        flightID, java.time.LocalDateTime.now()));
+    }
+    if (type == "Passenger") {
+      flights.add(FlightFactory.createFlight("Passenger", AirlineFactory.getAirline("United"), AirportFactory.getAirport("LAX"), AirportFactory.getAirport("OHR")
+          , flightID, java.time.LocalDateTime.now(), 200));
+    }
+    return flightID;
   }
 
   public Flight getFlightByNumber(String flightNum) throws BadParameterException {
